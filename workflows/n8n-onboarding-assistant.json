@@ -1,0 +1,1675 @@
+{
+  "name": "Onboarding Assistant",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## Router\nDefines task or asks user back",
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1760,
+        1392
+      ],
+      "typeVersion": 1,
+      "id": "b5be357c-f786-4c97-9e53-6bd7ca4fb474",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## HR helper flow\nFlow to help with HR topics",
+        "width": 256,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -304,
+        1712
+      ],
+      "typeVersion": 1,
+      "id": "3ecf4071-585c-4c73-be8b-c1577153299d",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "## Tech support flow\nHelps to resolve tech & access issues",
+        "height": 128,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -736,
+        768
+      ],
+      "typeVersion": 1,
+      "id": "f3043e59-3482-4384-b4d1-acf5a5cdf072",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "content": "## Team flow\nHelps to get info about specific team, its tools, members, structure",
+        "height": 208,
+        "width": 256,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -688,
+        -352
+      ],
+      "typeVersion": 1,
+      "id": "02a7da54-6b2b-4368-923c-642a0c740cb6",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.output.action }}",
+                    "rightValue": "ONBOARDING",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "b26f158e-e7eb-43c8-9f16-446040e64e09"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "onboarding"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "177f872a-7799-41f5-b26e-6da710cde91d",
+                    "leftValue": "={{ $json.output.action }}",
+                    "rightValue": "TECH_SUPPORT",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "tech support"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "19aa83a4-0f98-43f0-a35d-3d28cdaa9df3",
+                    "leftValue": "={{ $json.output.action }}",
+                    "rightValue": "RESOURCES",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "hr"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "ea0d38bb-b3ec-4d99-840f-92f3ea6cc348",
+                    "leftValue": "={{ $json.output.action }}",
+                    "rightValue": "ABBREVIATION",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "abbreviation"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "77da96be-9ab9-4e3a-a02d-ce43950eaebb",
+                    "leftValue": "={{ $json.output.action }}",
+                    "rightValue": "CHAT",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "chat"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        -1184,
+        1488
+      ],
+      "id": "1cb68a18-2e45-41cd-a7b4-634f4b476e07",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "message": "={{ $json.output.user_response }}",
+        "waitUserReply": false,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chat",
+      "typeVersion": 1,
+      "position": [
+        -1264,
+        1920
+      ],
+      "id": "837f8d6d-4145-40c8-a1c3-5ae6644eb530",
+      "name": "Respond to Chat"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $json.sessionId }}",
+        "contextWindowLength": 20
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        -1744,
+        1744
+      ],
+      "id": "6ee8d97d-b5c4-49ab-a75b-7f6c1db18700",
+      "name": "Simple Memory2"
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"action\": \"ONBOARDING | RESOURCES | TECH_SUPPORT | ABBREVIATION\" ,\n  \"user_response\": \"hello how can i help you\",\n  \"conversation_summary\": \"\",\n  \"category_hint\": \"Onboarding issue\",\n  \"key_context\": \"\"\n}",
+        "autoFix": true
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        -1648,
+        1728
+      ],
+      "id": "ed64cb8a-c42a-47f1-aafa-576bcd558f1a",
+      "name": "Structured Output Parser1"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -1872,
+        1728
+      ],
+      "id": "112843a3-a8d1-41db-a5aa-9ad8895a49e4",
+      "name": "Google Gemini Chat Model2",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "CLhHpMaTd8x1e1DS",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -1648,
+        1904
+      ],
+      "id": "3ed26606-c807-4e63-b7cc-ad2163600445",
+      "name": "Google Gemini Chat Model3",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "CLhHpMaTd8x1e1DS",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "message": "={{ $json.output.user_response }}\n{{ $json.output }}",
+        "waitUserReply": false,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chat",
+      "typeVersion": 1,
+      "position": [
+        160,
+        2800
+      ],
+      "id": "2e7e4bc6-9cd4-49b3-b5b8-054e4a094548",
+      "name": "Respond to Chat1"
+    },
+    {
+      "parameters": {
+        "message": "={{ $json.output.user_response }}\n{{ $json.output }}",
+        "waitUserReply": false,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chat",
+      "typeVersion": 1,
+      "position": [
+        144,
+        1616
+      ],
+      "id": "f2d6d1e5-df60-4ee3-858e-6cb7e9003ec6",
+      "name": "Respond to Chat3"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('Router agent').item.json.output.conversation_summary }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "in given Simple Vector Storage find relevant information and return it to user. Answer briefly and succinctly\n\n\nTRELLO TICKET:\nTitle: \"[ROLE][CATEGORY] Brief issue - [URGENCY]\" (under 60 chars)\nExamples: \"[Developer][New Hire Enrollment] Accesses Procurement - [URGENCY] \"\n\nDescription: Include customer issue, list of accesses to be procured, emotional state, business\nimpact, technical details."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        -288,
+        1808
+      ],
+      "id": "3b35e5fd-5500-4905-b7bd-6c13618889e5",
+      "name": "hr_agent"
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolDescription": "IT Roles Onboarding Checklist\nThis document provides a general and role-specific onboarding checklist for several key positions within an IT company. This can be adapted for new hires to ensure a smooth and productive start.\n\n1. Software Developer\nGeneral Onboarding Checklist\nComplete HR paperwork and submit necessary forms.\n\nSet up company email account and calendar.\n\nGet access to communication tools (e.g., Slack, Microsoft Teams).\n\nReceive company laptop and necessary hardware.\n\nReview company handbook and key policies (e.g., security, remote work).\n\nAttend a welcome session and meet the team.\n\nGet an overview of the company's mission, vision, and organizational structure.\n\nSchedule one-on-one meetings with your direct manager and key team members.\n\nRole-Specific Checklist\nReceive access credentials for code repositories (e.g., GitHub, GitLab, Bitbucket).\n\nSet up local development environment (IDE, SDKs, dependencies).\n\nGet a walkthrough of the team's tech stack and architecture.\n\nGet access to the CI/CD pipeline and deployment tools.\n\nReceive a \"getting started\" task or a small bug fix to familiarize with the codebase.\n\nGet an overview of the code review process and team standards.\n\nReview documentation for key projects or services.\n\nLearn about the team's project management methodology (e.g., Scrum, Kanban).\n\n2. IT Support Specialist\nGeneral Onboarding Checklist\nComplete HR paperwork and submit necessary forms.\n\nSet up company email account and calendar.\n\nGet access to communication tools (e.g., Slack, Microsoft Teams).\n\nReceive company laptop and necessary hardware.\n\nReview company handbook and key policies (e.g., security, remote work).\n\nAttend a welcome session and meet the team.\n\nGet an overview of the company's mission, vision, and organizational structure.\n\nSchedule one-on-one meetings with your direct manager and key team members.\n\nRole-Specific Checklist\nReceive access to the ticketing system (e.g., Jira Service Management, Zendesk, ServiceNow).\n\nGet a tour of the IT closet and hardware inventory.\n\nBe introduced to key IT vendors and service providers.\n\nLearn how to manage user accounts (password resets, provisioning).\n\nReview common troubleshooting guides and knowledge base articles.\n\nLearn the escalation path for complex or critical issues.\n\nGet an overview of the company's network infrastructure and common network issues.\n\nPractice handling a few mock support tickets with a mentor.\n\n3. Project Manager (IT)\nGeneral Onboarding Checklist\nComplete HR paperwork and submit necessary forms.\n\nSet up company email account and calendar.\n\nGet access to communication tools (e.g., Slack, Microsoft Teams).\n\nReceive company laptop and necessary hardware.\n\nReview company handbook and key policies (e.g., security, remote work).\n\nAttend a welcome session and meet the team.\n\nGet an overview of the company's mission, vision, and organizational structure.\n\nSchedule one-on-one meetings with your direct manager and key team members.\n\nRole-Specific Checklist\nReceive access to the project management tool (e.g., Asana, Jira, Trello).\n\nGet an overview of current projects, project scope, and timelines.\n\nBe introduced to key stakeholders and project teams.\n\nLearn about the company's preferred project management methodology (e.g., Agile, Scrum, Waterfall).\n\nReview templates for project plans, status reports, and other documentation.\n\nGet access to budget tracking tools and financial reporting systems.\n\nUnderstand the process for change requests and risk management.\n\nShadow a project team meeting to observe their workflow.\n\n4. Data Analyst\nGeneral Onboarding Checklist\nComplete HR paperwork and submit necessary forms.\n\nSet up company email account and calendar.\n\nGet access to communication tools (e.g., Slack, Microsoft Teams).\n\nReceive company laptop and necessary hardware.\n\nReview company handbook and key policies (e.g., security, remote work).\n\nAttend a welcome session and meet the team.\n\nGet an overview of the company's mission, vision, and organizational structure.\n\nSchedule one-on-one meetings with your direct manager and key team members.\n\nRole-Specific Checklist\nReceive access to relevant databases and data warehouses.\n\nGet credentials for Business Intelligence (BI) tools (e.g., Tableau, Power BI).\n\nBe introduced to the data governance policies and data privacy regulations.\n\nReview documentation on available data sources and their schemas.\n\nLearn about the company's key business metrics and KPIs.\n\nGet an overview of the reporting schedule and stakeholder needs.\n\nSet up your preferred analytics and data visualization tools.\n\nWork on a simple data retrieval and analysis task to get familiar with the environment.\n\n5. Cybersecurity Analyst\nGeneral Onboarding Checklist\nComplete HR paperwork and submit necessary forms.\n\nSet up company email account and calendar.\n\nGet access to communication tools (e.g., Slack, Microsoft Teams).\n\nReceive company laptop and necessary hardware.\n\nReview company handbook and key policies (e.g., security, remote work).\n\nAttend a welcome session and meet the team.\n\nGet an overview of the company's mission, vision, and organizational structure.\n\nSchedule one-on-one meetings with your direct manager and key team members.\n\nRole-Specific Checklist\nReceive access to security information and event management (SIEM) tools (e.g., Splunk, LogRhythm).\n\nGet access to vulnerability scanners and penetration testing tools.\n\nBe introduced to the incident response plan and key playbooks.\n\nLearn about the company's current security posture and major threats.\n\nReview all security policies, procedures, and compliance requirements.\n\nGet credentials for network monitoring and endpoint protection tools.\n\nSet up threat intelligence feeds and security alerts.\n\nParticipate in a simulated security incident to test the response process.\n\n6. QA Analyst\nGeneral Onboarding Checklist\nComplete HR paperwork and submit necessary forms.\n\nSet up company email account and calendar.\n\nGet access to communication tools (e.g., Slack, Microsoft Teams).\n\nReceive company laptop and necessary hardware.\n\nReview company handbook and key policies (e.g., security, remote work).\n\nAttend a welcome session and meet the team.\n\nGet an overview of the company's mission, vision, and organizational structure.\n\nSchedule one-on-one meetings with your direct manager and key team members.\n\nRole-Specific Checklist\nReceive access to testing tools and frameworks (e.g., Selenium, Cypress, JUnit).\n\nGet a walkthrough of the bug tracking system (e.g., Jira, Bugzilla).\n\nLearn about the different testing environments and stages (e.g., Dev, QA, Staging, Production).\n\nReview existing test plans, test cases, and quality standards documentation.\n\nUnderstand the software development life cycle (SDLC) and how QA fits into the release process.\n\nGet credentials for the CI/CD pipeline to monitor test runs.\n\nPractice logging a bug and following the bug resolution process.\n\nGet an overview of performance, security, and accessibility testing procedures.",
+        "memoryKey": {
+          "__rl": true,
+          "mode": "list",
+          "value": "vector_store_key"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreInMemory",
+      "typeVersion": 1.3,
+      "position": [
+        -832,
+        0
+      ],
+      "id": "56dc97a5-b01f-4461-bbe1-c39ebb3edc76",
+      "name": "onboarding_checklist"
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolDescription": "Our Team: Who to Contact for What\nHere is a list of key employees. You can contact them directly for questions related to their areas of responsibility.\n1. Alex Leeson\nTitle: Lead Backend Engineer\nEmployee ID: INN-001\nEmail: alex.leeson@innovatech.solutions\nArea of Responsibility and Technologies:\nBackend system architecture\nSpring AI\nComfyUI integration\nAPI development\nDatabases and server-side logic\n2. Maria Garcia\nTitle: Lead Frontend Engineer\nEmployee ID: INN-002\nEmail: maria.garcia@innovatech.solutions\nArea of Responsibility and Technologies:\nFrontend application architecture\nReact Native\nProject bundling and development environment with Vite\nUser Interfaces (UI/UX)\nApplication State Management\n3. David Chen\nTitle: Software Developer\nEmployee ID: INN-003\nEmail: david.chen@innovatech.solutions\nArea of Responsibility and Technologies:\nGeneral codebase questions\nWorking with repositories (GitHub, GitLab)\nLocal development environment setup\nCI/CD processes\nBug fixing and new feature implementation\n4. Sarah Jones\nTitle: IT Support Specialist\nEmployee ID: INN-004\nEmail: sarah.jones@innovatech.solutions\nArea of Responsibility and Technologies:\nIssuing and configuring hardware (laptops, monitors)\nPassword resets and account management\nWorking with ticketing systems (Jira Service Management, Zendesk)\nResolving network and access issues\nConsulting on internal software\n5. Michael Bay\nTitle: IT Project Manager\nEmployee ID: INN-005\nEmail: michael.bay@innovatech.solutions\nArea of Responsibility and Technologies:\nProject timelines and milestones\nTask management in Asana, Jira, Trello\nCommunication between the team and stakeholders\nAgile and Scrum processes\nProject reporting and budget\n6. Emily Rodriguez\nTitle: Data Analyst\nEmployee ID: INN-006\nEmail: emily.rodriguez@innovatech.solutions\nArea of Responsibility and Technologies:\nAccess to databases and data warehouses\nBusiness Intelligence (BI) tools (Tableau, Power BI)\nKey Business Metrics (KPIs)\nCreating reports and dashboards\nData Governance policies\n7. Daniel Park\nTitle: Cybersecurity Analyst\nEmployee ID: INN-007\nEmail: daniel.park@innovatech.solutions\nArea of Responsibility and Technologies:\nSecurity policies and compliance\nSIEM tools (Splunk, LogRhythm)\nVulnerability scanning\nIncident response plan\nNetwork monitoring and endpoint protection\n8. Chloe Adams\nTitle: QA Analyst\nEmployee ID: INN-008\nEmail: chloe.adams@innovatech.solutions\nArea of Responsibility and Technologies:\nTesting processes and quality standards\nTesting tools (Selenium, Cypress)\nBug tracking systems (Jira, Bugzilla)\nTest environments (Dev, QA, Staging)\nSoftware Development Life Cycle (SDLC) from a QA perspective",
+        "memoryKey": {
+          "__rl": true,
+          "mode": "list",
+          "value": "vector_store_key"
+        },
+        "topK": 2
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreInMemory",
+      "typeVersion": 1.3,
+      "position": [
+        -544,
+        0
+      ],
+      "id": "2d50a476-0c27-4dd1-b24f-52ffcc6017f4",
+      "name": "team_members"
+    },
+    {
+      "parameters": {
+        "description": "This tool will make request to github repo with documenttaion",
+        "workflowId": {
+          "__rl": true,
+          "value": "BKZ4zEyUGo6aBxZL",
+          "mode": "list",
+          "cachedResultName": "Project 101 — tool_github_request"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {}
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        -256,
+        0
+      ],
+      "id": "d1096dca-8b30-40a3-9868-58e916e5190f",
+      "name": "Call 'tool_github_request'"
+    },
+    {
+      "parameters": {
+        "content": "## Abbreviation helper\nHelps to resolve company specific short word",
+        "height": 144,
+        "width": 256,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -288,
+        2544
+      ],
+      "typeVersion": 1,
+      "id": "16b26b1d-cc89-4954-9eb6-c08957974466",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.inputMessage }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "Role: You are \"Hackstreet Bot\" an AI assistant designed to be the first point of contact and an invaluable guide for new employees in a large company. Your primary goal is to help newcomers feel welcome, informed, and confident during their first month. You are a source of truth for company information, a problem-solver for common issues, and a friendly presence that reduces the anxiety of starting a new job.\n\nCore Tasks:\n\nOnboarding Guidance: Provide a step-by-step onboarding checklist, personalized for the new hire's department (e.g., Engineering, Marketing, Sales). This includes links to necessary documents and tools.\n\nResource Navigation: Answer questions about company policies, benefits, and general information (e.g., \"How do I request time off?\", \"Where can I find the company's dress code?\"). Direct users to the correct Wiki pages, internal sites, or HR contacts.\n\nTechnical Support: Help with basic technical setup and access issues (e.g., \"My VPN isn't connecting,\" \"How do I get access to Jira?\"). Provide clear, simple instructions and escalate more complex issues to the IT support team, giving the user the correct contact information.\n\n\n\nINSTRUCTIONS:\n\nINSTRUCTIONS:\n1. Review chat_history to gauge journey and satisfaction.\n2. Decide: what user needs: onboarding, requests about resources or  asks for tech support\n3. Send a brief professional message about next steps (1–2 sentences).\n4. Create a concise strategic summary for the specialist: attempted steps, failures, customer situation, and key details.\n5. Don't ask follow-ups. Pass complex cases to the specialist.\n6. use ONLY actions presented in list below\n\nACTIONS:\n1. ONBOARDING\nCore Action: ONBOARDING\n\nDescription: If the user asks about getting started, getting settled, or meeting the team, provide a personalized checklist, schedule introductory meetings, and give an overview of their team. If user asked questions about his team members and team structure.\n\n2. RESOURCES\nCore Action: RESOURCES\n\nDescription: If the user asks for company information, provide quick access to the knowledge base, answer frequently asked questions, and redirect them to human resources if needed.\n\n3. TECH_SUPPORT\nCore Action: TECH_SUPPORT\n\nDescription: If the user asks for help with a technical issue, assist with troubleshooting, explain how to gain access to platforms, and automatically create a support ticket if the problem persists.\n\n4. ABBREVIATION\nCore Action: decoding of the abbreviation\n\nDescription: If the user asks for decoding of the abbreviation\n\n5. CHAT\nIf topic is outside of scope of previous described topics\n\n\nTone and Style:\n\nPositive and Encouraging: Use a friendly, professional, and optimistic tone. Be a cheerleader for the new hire's success.\n\nClear and Concise: Get straight to the point. Use simple language and avoid jargon unless it's a direct quote from technical documentation.\n\nProactive: Anticipate common needs. If a user asks about setting up their email, you can proactively offer help with other essential tools.\n\nEmpathetic: Acknowledge the challenges of starting a new job. Use phrases like, \"That's a common question, let me help you with that,\" or \"It's a lot to take in at first, but you'll get the hang of it.\"\n\nConstraints:\n\nDo not hallucinate or guess. If the answer isn't in your knowledge base, state this clearly and redirect the user to the correct human resource.\n\nDo not provide sensitive or confidential information. Always refer to the official HR portal for personal data requests.\n\nDo not give opinions. Stick to facts and information from verified company sources.\n\n\nJSON OUTPUT FORMAT:\n{\n  \"action\": \"ONBOARDING | RESOURCES | TECH_SUPPORT\" | \"ABBREVIATION\",\n  \"user_response\": \"user wants to know how to be onboarded\",\n  \"conversation_summary\": \"\",\n  \"category_hint\": \"Onboarding issue\",\n  \"key_context\": \"\"\n}\n\nput to the user_response response to user with correct information\nAlways respond in valid JSON format. Analyze the conversation carefully and choose the most appropriate action. Keep fields concise. No extra text. Do not add anything!!"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        -1760,
+        1504
+      ],
+      "id": "2e2834a6-39a7-42e1-8cc3-51e7289bbbfb",
+      "name": "Router agent"
+    },
+    {
+      "parameters": {
+        "message": "={{ $json.output }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chat",
+      "typeVersion": 1,
+      "position": [
+        -224,
+        -224
+      ],
+      "id": "57c7c384-7d24-4a54-a0d4-a2d297904acb",
+      "name": "Team agent response"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('Router agent').item.json.output.conversation_summary }}",
+        "options": {
+          "systemMessage": "=You are the \"DISCO Project Guide,\" an AI assistant from Hackstreet Inc. Your entire purpose is to serve the innovators working on the DISCO project. As a creative foundry, our goal is to make DISCO a flawless and inspiring product, and you are an elegant and intuitive extension of that mission.\nYour primary goal is to provide accurate answers about the DISCO project's team, processes, and technical implementation using the specialized tools provided to you. Assume all questions about \"the project\" refer to the DISCO project.\nYour Tools (for the DISCO Project):\nYou have access to the following tools, which contain information only about the DISCO project:\nteam_members (Vector Store):\nContent: This tool contains detailed information about all Hackstreet employees currently assigned to the DISCO project. This includes their full name, role on the project, email address, responsibilities, and key technologies they work with for DISCO.\nUse When: The user's question is about \"who\" on the DISCO team. For example: \"Who is the DISCO expert on Spring AI?\", \"How can I contact the person responsible for project management for DISCO?\", \"What is Alex Leeson's role on the DISCO project?\".\nonboarding_checklist (Vector Store):\nContent: This tool contains the complete onboarding process for new team members joining the DISCO project. It includes general steps and role-specific checklists for positions like Software Developer, QA Analyst, etc., within the context of DISCO.\nUse When: The user's question is about \"how\" or \"what is the process\" for getting started on the DISCO project. For example: \"What are the first steps for a new developer on DISCO?\", \"How do I set up my development environment for the DISCO project?\".\ntool:github_context (Live Data Tool):\nContent: This tool actively reads the most current content of all files from the DISCO project's GitHub repository. It provides the absolute latest technical information.\nUse When: The user asks for up-to-date, latest, or very specific technical details about the DISCO project that might have changed recently. Use it for questions about \"implementation details,\" \"current project status,\" \"the latest documentation for DISCO,\" or when information cannot be found in the other tools. Example questions: \"Describe the current frameworks used in the DISCO project based on the latest documentation,\" \"What is the latest update on the DISCO backend implementation?\".\nYour Workflow:\nFollow these steps to answer every user query:\nAnalyze the User's Intent: Carefully read the user's question, remembering that it is always about the DISCO project. Are they asking about a person, a process, or a technical detail?\nSelect the Correct Tool: Based on your analysis, choose the most appropriate tool for the DISCO project.\nIf the question is about a person on the team, use team_members.\nIf the question is about a project process, use onboarding_checklist.\nIf the question requires the latest technical data, use tool:github_context.\nFormulate a Search Query: Create a concise and effective search query from the user's question to use with the selected tool.\nSynthesize the Answer: Once the tool returns information, do not just output the raw text. Synthesize the retrieved data into a clear, inspiring, and delightful answer that reflects the spirit of the DISCO project.\nRespond Clearly: Present the answer in a professional yet creative and friendly tone.\nImportant Rules:\nDo Not Hallucinate: If the information about the DISCO project is not in your tools, state that you couldn't find an answer. Never invent information. Our commitment is to flawless function.\nStick to Your Tools: Your knowledge is strictly limited to the information about the DISCO project within your tools.\nBe Direct and Inspiring: Provide a direct answer that is not only accurate but also helpful and encouraging for your fellow DISCO team members.\nWhen you answer is checklist - make it structured and good readable"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        -672,
+        -224
+      ],
+      "id": "ddd38d22-b78b-4e4c-be9f-fddbfda0085e",
+      "name": "Team agent"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('Router agent').item.json.output.conversation_summary }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "Given an input text, identify abbreviations that exist inside the vector database.\n\nFor each abbreviation found in the input that matches an abbreviation in the vector DB:\n- Retrieve the associated 'transcript' from the DB.\n- Search for a deeper explanation, definition, and examples of usage of this abbreviation from trusted internet sources.\n- Add this additional information under a new field called 'data from internet' while retaining the original transcript.\n\nReturn the results in the following format for each abbreviation found:\n\n\n  Abbreviature: \"<abbreviation>\", \\n\n  Transcript: \"<original transcript from vector DB>\",\\n\n  Data from internet: \"<expanded detailed description with usage examples sourced from the internet>\"\n\n\nEnsure the 'data from internet' section includes:\n- A full form or expansion of the abbreviation.\n- Deeper description and context.\n- Multiple examples of usage in sentences."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        -272,
+        2656
+      ],
+      "id": "c866bf77-f0aa-4a67-8241-db4a44f50c0e",
+      "name": "abbreviation_agent"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "d0466c09-b468-4a86-b3b2-c5d458e35dec",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -2192,
+        1504
+      ],
+      "id": "083b6c2d-e0f2-40da-9a7f-d38faa2afcf5",
+      "name": "Webhook",
+      "webhookId": "d0466c09-b468-4a86-b3b2-c5d458e35dec"
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "={{ $('Router agent').item.json.output.user_response }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        -928,
+        1808
+      ],
+      "id": "90b8fb20-e685-4da5-98c0-4f89045212b9",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "={{ $json.output }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        96,
+        2656
+      ],
+      "id": "1ec09372-03c4-47c6-84c9-eb039c81904b",
+      "name": "Respond to Webhook2"
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "={{ $json.output }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        -224,
+        -336
+      ],
+      "id": "975aee06-11b6-4ba4-be6a-9d7aa2476d45",
+      "name": "Respond to Webhook4"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "62ca3bd3-05c0-4c61-b16b-62ee8a870532",
+              "name": "sessionId",
+              "value": "={{ $json.headers['x-session-id'] }}",
+              "type": "string"
+            },
+            {
+              "id": "de6e14e4-5a00-4fbe-b7eb-d758cfa02da2",
+              "name": "inputMessage",
+              "value": "={{ $json.body.message }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1968,
+        1504
+      ],
+      "id": "ef86bef0-38f3-4b45-bfb2-c05516e76b87",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "=The ticket regarding your access request has been successfully created. The IT team will notify you on progress",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        256,
+        240
+      ],
+      "id": "bb7d0e4f-f0a2-4532-8591-a87fd9e480e4",
+      "name": "Respond to Webhook5"
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "=The ticket regarding your hardware request has been successfully created. The IT team will notify you on progress.",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        160,
+        992
+      ],
+      "id": "bc3d13b4-6e7f-48f7-b8bb-b8eb66ef330d",
+      "name": "Respond to Webhook6"
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolDescription": "Abbreviation\tLong term\n2G\tSecond Generation Mobile Network\n3G\tThird Generation Mobile Network\n4G\tFourth Generation Mobile Network\n5G\tFifth Generation Mobile Network\nAAA\tAuthentication, Authorization, Accounting\nACL\tAccess Control List\nAPI\tApplication Programming Interface\nARP\tAddress Resolution Protocol\nASN\tAutonomous System Number\nATM\tAsynchronous Transfer Mode\nBGP\tBorder Gateway Protocol\nBSS\tBusiness Support System\nBTS\tBase Transceiver Station\nCDN\tContent Delivery Network\nCDR\tCall Detail Record\nCS\tCircuit Switched\nCSR\tCustomer Service Representative\nDAC\tDigital-to-Analog Converter\nDHCP\tDynamic Host Configuration Protocol\nDNS\tDomain Name System\nDSL\tDigital Subscriber Line\nEDGE\tEnhanced Data rates for GSM Evolution\nEIR\tEquipment Identity Register\nEMS\tElement Management System\neNB\tEvolved Node B\nEPC\tEvolved Packet Core\nESM\tEPS Session Management\nETSI\tEuropean Telecommunications Standards Institute\nFDD\tFrequency Division Duplex\nFMC\tFixed Mobile Convergence\nFTP\tFile Transfer Protocol\nGGSN\tGateway GPRS Support Node\nGMSC\tGateway Mobile Switching Centre\nGPRS\tGeneral Packet Radio Service\nGPS\tGlobal Positioning System\nGSM\tGlobal System for Mobile Communication\nHSS\tHome Subscriber Server\nHLR\tHome Location Register\nHTTP\tHyperText Transfer Protocol\nHTTPS\tHyperText Transfer Protocol Secure\nIANA\tInternet Assigned Numbers Authority\nICMP\tInternet Control Message Protocol\nICT\tInformation and Communications Technology\nIEEE\tInstitute of Electrical and Electronics Engineers\nIETF\tInternet Engineering Task Force\nIMEI\tInternational Mobile Equipment Identity\nIMSI\tInternational Mobile Subscriber Identity\nIN\tIntelligent Network\nIP\tInternet Protocol\nIPX\tIP Exchange\nIR\tInternational Roaming\nISDN\tIntegrated Services Digital Network\nISP\tInternet Service Provider\nITU\tInternational Telecommunication Union\nIVR\tInteractive Voice Response\nKPI\tKey Performance Indicator\nLAN\tLocal Area Network\nLTE\tLong Term Evolution\nMAC\tMedia Access Control\nMCC\tMobile Country Code\nMIMO\tMultiple Input Multiple Output\nMMSC\tMultimedia Messaging Service Center\nMME\tMobility Management Entity\nMMS\tMultimedia Messaging Service\nMNP\tMobile Number Portability\nMOCN\tMulti-Operator Core Network\nMOS\tMean Opinion Score\nMSC\tMobile Switching Centre\nMSISDN\tMobile Station ISDN Number\nMSS\tMobile Softswitch\nMTU\tMaximum Transmission Unit\nNAT\tNetwork Address Translation\nNCC\tNational Communications Commission\nNGN\tNext Generation Network\nNMC\tNetwork Management Center\nNOC\tNetwork Operations Center\nNSS\tNetwork Switching Subsystem\nNTP\tNetwork Time Protocol\nOAM\tOperations, Administration and Maintenance\nOCS\tOnline Charging System\nOFDM\tOrthogonal Frequency Division Multiplexing\nOMA\tOpen Mobile Alliance\nOMC\tOperations and Maintenance Center\nOSS\tOperations Support System\nOTA\tOver-the-Air\nOTN\tOptical Transport Network\nPABX\tPrivate Automatic Branch Exchange\nPBX\tPrivate Branch Exchange\nPCRF\tPolicy and Charging Rules Function\nPDP\tPacket Data Protocol\nPGW\tPacket Gateway\nPLMN\tPublic Land Mobile Network\nPON\tPassive Optical Network\nPoP\tPoint of Presence\nPSTN\tPublic Switched Telephone Network\nPTT\tPush-to-Talk\nQAM\tQuadrature Amplitude Modulation\nQoE\tQuality of Experience\nQoS\tQuality of Service\nRAN\tRadio Access Network\nRF\tRadio Frequency\nRLC\tRadio Link Control\nRNC\tRadio Network Controller\nROC\tRegional Operations Center\nRoaming\tInternational Mobile Roaming\nRSRP\tReference Signal Received Power\nRSRQ\tReference Signal Received Quality\nRTCP\tReal-Time Control Protocol\nRTP\tReal-Time Transport Protocol\nRTT\tRound-Trip Time\nSAE\tSystem Architecture Evolution\nSBC\tSession Border Controller\nSCCP\tSignalling Connection Control Part\nSCEF\tService Capability Exposure Function\nSCP\tService Control Point\nS-CSCF\tServing Call Session Control Function\nSGSN\tServing GPRS Support Node\nSIM\tSubscriber Identity Module\nSIP\tSession Initiation Protocol\nSMS\tShort Message Service\nSMSc\tShort Message Service Center\nSNMP\tSimple Network Management Protocol\nSON\tSelf-Organizing Network\nSP\tService Provider\nSR\tService Request\nSRVCC\tSingle Radio Voice Call Continuity\nSS7\tSignaling System No.7\nSSID\tService Set Identifier\nSSL\tSecure Sockets Layer\nSTP\tSignal Transfer Point\nTAC\tTracking Area Code\nTCP\tTransmission Control Protocol\nTDM\tTime Division Multiplexing\nTETRA\tTerrestrial Trunked Radio\nTLS\tTransport Layer Security\nTP\tTransmission Point\nTRAU\tTranscoder and Rate Adaptation Unit\nTS\tTechnical Specification\nTTI\tTransmission Time Interval\nTTL\tTime To Live\nUDP\tUser Datagram Protocol\nUDR\tUser Data Repository\nUMTS\tUniversal Mobile Telecommunications System\nUSIM\tUniversal Subscriber Identity Module\nUSSD\tUnstructured Supplementary Service Data\nVLAN\tVirtual Local Area Network\nVoIP\tVoice over IP\nVoLTE\tVoice over LTE\nVPN\tVirtual Private Network\nVPLMN\tVisited Public Land Mobile Network\nVLR\tVisitor Location Register\nVNF\tVirtualized Network Function\nVOD\tVideo on Demand\nVPI\tVirtual Path Identifier\nVSAT\tVery Small Aperture Terminal\nWAP\tWireless Application Protocol\nWCDMA\tWideband Code Division Multiple Access\nWi-Fi\tWireless Fidelity\nWiMAX\tWorldwide Interoperability for Microwave Access\nWLAN\tWireless Local Area Network\nX.25\tX.25 Protocol\nXCAP\tXML Configuration Access Protocol\nXML\tExtensible Markup Language\nXMPP\tExtensible Messaging and Presence Protocol\nZTE\tZhongxing Telecommunication Equipment\nAAA Server\tAuthentication, Authorization, Accounting Server\nAGW\tAccess Gateway\nAMF\tAccess and Mobility Management Function\nANR\tAutomatic Neighbor Relation\nAPN\tAccess Point Name\nBBU\tBaseband Unit\nBSC\tBase Station Controller\nCA\tCarrier Aggregation\nCAI\tCommon Air Interface\nCAMEL\tCustomized Applications for Mobile network Enhanced Logic\nCAPEX\tCapital Expenditures\nCIR\tCommitted Information Rate\nCLI\tCalling Line Identification\nCoAP\tConstrained Application Protocol\nCSCF\tCall Session Control Function\nCU\tCentral Unit\nCWDM\tCoarse Wavelength Division Multiplexing\nDCN\tData Communication Network\nDDOS\tDistributed Denial of Service\nDF\tDistribution Frame\nDHCPv6\tDynamic Host Configuration Protocol for IPv6\nDIAMETER\tDiameter Protocol\nDL\tDownlink\nDPI\tDeep Packet Inspection\nDRX\tDiscontinuous Reception\nDU\tDistributed Unit\nDWDM\tDense Wavelength Division Multiplexing\nE2E\tEnd-to-End\nEARFCN\tE-UTRA Absolute Radio Frequency Channel Number\nECI\tE-UTRAN Cell Identifier\neDRX\tExtended Discontinuous Reception\nEIRP\tEffective Isotropic Radiated Power\nEPCO\tEvolved Packet Connectivity Option\nFACH\tForward Access Channel\nFEC\tForward Error Correction\nFMCN\tFixed Mobile Convergence Network\nGTP\tGPRS Tunneling Protocol\nGTP-C\tGPRS Tunneling Protocol - Control Plane\nGTP-U\tGPRS Tunneling Protocol - User Plane\nHetNet\tHeterogeneous Network\nHO\tHandover\nICIC\tInter-Cell Interference Coordination\nIMS\tIP Multimedia Subsystem\nIoT\tInternet of Things\nIRAT\tInter-Radio Access Technology\nISUP\tISDN User Part\nLAI\tLocation Area Identity\nLBO\tLocal Break Out\nLPN\tLow Power Node\nLTE-A\tLong Term Evolution - Advanced\nM2M\tMachine-to-Machine\nMACRO\tMacrocell\nMANO\tManagement and Orchestration\nMBMS\tMultimedia Broadcast Multicast Service\nMEC\tMobile Edge Computing\nMIMO-OFDM\tMultiple Input Multiple Output - Orthogonal Frequency Division Multiplexing\nMMTel\tMultimedia Telephony\nMMZ\tMultimedia Zone\nMOC\tMobile Originated Call\nMPLS\tMultiprotocol Label Switching\nMRF\tMedia Resource Function\nMRP\tMean Reselection Probability\nMRV\tMean Reselection Value\nMTC\tMachine Type Communication\nNB-IoT\tNarrowband Internet of Things\nNFV\tNetwork Function Virtualization\nNG-RAN\tNext Generation Radio Access Network\nNGAP\tNext Generation Application Protocol\nNR\tNew Radio (5G)\nNSA\tNon-Standalone\nNSN\tNokia Siemens Networks\nNTT\tNippon Telegraph and Telephone\nNVRAM\tNon-Volatile Random-Access Memory\nOBSAI\tOpen Base Station Architecture Initiative\nOFDMA\tOrthogonal Frequency Division Multiple Access\n",
+        "memoryKey": {
+          "__rl": true,
+          "mode": "list",
+          "value": "vector_store_key"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreInMemory",
+      "typeVersion": 1.3,
+      "position": [
+        -240,
+        2912
+      ],
+      "id": "f48706fc-b726-498b-a096-7a77b47e00b8",
+      "name": "Abbreviation Simple Vector Store"
+    },
+    {
+      "parameters": {
+        "model": "o3-mini",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatAzureOpenAi",
+      "typeVersion": 1,
+      "position": [
+        -352,
+        2880
+      ],
+      "id": "136aa0ab-818c-4ff8-9f85-bcd81255c459",
+      "name": "Abbreviation Azure OpenAI Chat Model",
+      "credentials": {
+        "azureOpenAiApi": {
+          "id": "QJtzDmAhZM2EfVd9",
+          "name": "Azure Open AI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsHuggingFaceInference",
+      "typeVersion": 1,
+      "position": [
+        -240,
+        3072
+      ],
+      "id": "e9eeab06-1ce1-40f4-b281-555328cff9d2",
+      "name": "Abbreviation Embeddings HuggingFace Inference",
+      "credentials": {
+        "huggingFaceApi": {
+          "id": "aJacnlSPs96ylGAl",
+          "name": "HuggingFaceApi account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "o3-mini",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatAzureOpenAi",
+      "typeVersion": 1,
+      "position": [
+        -320,
+        2032
+      ],
+      "id": "0f21e9eb-1dcc-47e7-bb92-092ee67799db",
+      "name": "HR_Agent Azure OpenAI Chat Model",
+      "credentials": {
+        "azureOpenAiApi": {
+          "id": "QJtzDmAhZM2EfVd9",
+          "name": "Azure Open AI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolDescription": "Hackstreet Inc.: Crafting the Future on Our Own Terms\nHackstreet Inc. is more than just an IT company; it's a creative foundry where code is transformed into art and innovation is a daily practice. Founded in 2015 in the vibrant industrial district of Portland, Oregon, Hackstreet Inc. quickly grew from a scrappy garage startup into a global leader in developing groundbreaking software solutions and designing transformative user experiences. We believe that technology should be an elegant and intuitive extension of human creativity, and we are dedicated to building products that not only function flawlessly but also inspire and delight their users.\n\nOur Origin Story and Leadership\nThe company was born from the shared vision of three friends whose skills perfectly complemented one another. Leo Kovacs (37), a gifted software architect with a passion for scalable systems, first conceived of a platform where project management felt less like a chore and more like a creative journey. He was joined by Claire White (35), an artist and UX designer with an unwavering obsession with aesthetics and emotional design, who ensured every product was a joy to interact with. The trio was completed by Mike Chang (40), a seasoned business strategist with a knack for navigating market trends and fostering strong, sustainable growth. Their collective dream was to build a company where technology served as a tool for solving genuine problems, and creativity was valued as much as technical prowess.\n\nToday, Hackstreet Inc. is steered by Elara Vance (45), our charismatic and visionary CEO. Having joined in 2018, Elara brought with her a wealth of experience from the world of sustainable technology. Under her leadership, the company's focus has sharpened, moving towards a mission-driven approach where every product aims to make a tangible, positive impact on society. She has fostered a culture of radical transparency and open-door policies, ensuring that every team member, from the newest intern to the most senior engineer, feels empowered to contribute their best ideas.\n\nOrganizational Structure and Hierarchy\nWhile Hackstreet Inc. has grown into a global enterprise, we have maintained a deliberately flat and agile organizational structure. Our model is built around self-sufficient, cross-functional \"Squads,\" each dedicated to a single product or initiative. This structure minimizes bureaucracy, accelerates decision-making, and empowers every team member to take ownership of their work.\n\nAt the highest level, the company is governed by a diverse and effective executive team:\n\nCEO (Chief Executive Officer) - Elara Vance: Responsible for the overall vision, strategy, and public-facing direction of the company.\n\nCTO (Chief Technology Officer) - Leo Kovacs: Oversees all technology development, architecture, and R&D projects.\n\nCPO (Chief Product Officer) - Claire White: Leads the design and product teams, ensuring a consistent and exceptional user experience across all products.\n\nCMO (Chief Marketing Officer) - Marcus Thorne (42): Drives all marketing and brand strategy, ensuring our message resonates with a global audience.\n\nCSO (Chief Strategy Officer) - Anya Sharma (39): Focuses on long-term business development, partnerships, and market expansion.\n\nHead of People & Culture - Naomi Jenkins (51): Nurtures our unique company culture and oversees all aspects of human resources and employee well-being.\n\nCFO (Chief Financial Officer): Manages financial operations and long-term investment strategy.\n\nBelow the executive level, our structure is organized into Tribes (groups of related Squads) and Guilds (communities of practice across the company). This matrix organization ensures deep expertise is shared and leveraged, while the core Squads remain focused and autonomous.\n\nGlobal Presence and Key Project Hubs\nOur \"Creation in Community\" principle extends beyond our Portland headquarters. We have established several key project hubs around the world, each strategically located to leverage local talent and contribute to regional tech ecosystems.\n\nPortland, USA (HQ): The original home of Hackstreet Inc. and the central hub for our core products, ZenFlow and UrbanPulse. This office remains our primary R&D center, focusing on foundational AI and machine learning advancements, led by Leo Kovacs.\n\nBerlin, Germany: This hub is our European center for UrbanPulse development, with a specific focus on urban mobility and sustainable city planning. The Berlin team, led by Klaus Richter, works directly with local governments and research institutions to adapt the platform for European regulations and cultural nuances.\n\nTokyo, Japan: Dedicated to our immersive reality educational platform, Aetherium. The Tokyo team, led by Hiroshi Tanaka, is at the forefront of combining VR technology with advanced haptics and robotics, aiming to create entirely new forms of interactive learning experiences. Their work focuses on developing the next generation of educational modules for science and engineering.\n\nSão Paulo, Brazil: This office is the primary hub for Symphony, our collaborative code-writing environment. The São Paulo team, led by Isabela Mendes, is an incubator for new features, leveraging local talent and a vibrant developer community to gather real-time feedback and rapidly iterate on the product. Their focus is on creating a tool that is not only powerful but also globally accessible and adaptable to different programming cultures.\n\nKey Products and Achievements\nWe are immensely proud of our innovative products that have disrupted their respective industries:\n\nZenFlow: A project management tool that transforms complex tasks into visually intuitive and effortlessly manageable workflows. ZenFlow's unique AI-powered algorithm intelligently prioritizes tasks and suggests optimal team allocations, drastically reducing burnout and boosting productivity. It was the recipient of the \"Global Tech Innovation Award 2021\" and has been praised by industry analysts for its elegant interface and seamless integration with existing enterprise systems.\n\nAetherium: An immersive virtual reality educational platform that allows students to explore complex scientific concepts through interactive, three-dimensional simulations. Imagine dissecting a virtual frog, building a functioning molecular model from scratch, or traversing the human circulatory system from a first-person perspective. This breakthrough was honored with the \"Future Tech Leader Award\" in 2022 and has been adopted by hundreds of educational institutions worldwide.\n\nUrbanPulse: A data visualization system that helps urban planners analyze infrastructure and traffic flow using interactive, intuitive 3D models. UrbanPulse has been instrumental in helping cities like London and Tokyo optimize public transit routes and plan future developments with unprecedented accuracy. The platform processes billions of data points in real-time, providing actionable insights that lead to smarter, more sustainable urban environments.\n\nSymphony: Our newest product, a collaborative code-writing environment that uses generative AI to assist developers with complex problem-solving. Symphony helps programmers of all skill levels write cleaner, more efficient code by offering real-time suggestions and debugging assistance, making the development process faster and more enjoyable.\n\nCulture and the Team\nAt Hackstreet Inc., we’ve created a workspace that nurtures the creative spirit. Our sprawling office is an open-plan space with a dedicated zen garden, soundproof creative pods for focused work, and a full-size gaming room. We believe in providing our team with the tools and freedom they need to thrive. We hold regular internal hackathons, \"creative spark\" workshops led by external artists, and company-wide trips to inspiring locations, from the Oregon coast to international destinations. We offer unlimited PTO, comprehensive health benefits, and a generous budget for professional development, because we value our people above all else. We are a family, and our collective success is a testament to the trust and respect we have for one another.\n\nAddress: 1134 NW 10th Ave, Portland, OR 97209, USA.\nWebsite: https://www.google.com/search?q=hackstreetinc.com\n\nThe Road Ahead\nWe continue to explore uncharted territories, with active R&D projects in the fields of artificial intelligence, decentralized networks, and bio-integrated computing. Our goal is not merely to follow technological progress but to set its direction, creating products that make the world more functional, beautiful, and harmonious. We are committed to using our technology for good, and we are excited to see what the future holds for Hackstreet Inc. and the communities we serve.",
+        "memoryKey": {
+          "__rl": true,
+          "mode": "list",
+          "value": "vector_store_key"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreInMemory",
+      "typeVersion": 1.3,
+      "position": [
+        -192,
+        2032
+      ],
+      "id": "8e5bf44f-8989-4513-9ad3-f52bda1b4425",
+      "name": "HR_Agent Simple Vector Store"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsHuggingFaceInference",
+      "typeVersion": 1,
+      "position": [
+        -112,
+        2240
+      ],
+      "id": "e895b90b-22d0-475b-9197-c068d1d9c709",
+      "name": "HR_Agent Embeddings HuggingFace Inference",
+      "credentials": {
+        "huggingFaceApi": {
+          "id": "aJacnlSPs96ylGAl",
+          "name": "HuggingFaceApi account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "listId": "68caa4d9c875f4dd83cacbf7",
+        "name": "HR ISSUE []{{ Switch.output.key_context }}",
+        "description": "={{ Switch.output.conversation_summary }} {{ Switch.output.category_hint }} {{ Switch.output.key_context }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.trello",
+      "typeVersion": 1,
+      "position": [
+        176,
+        1904
+      ],
+      "id": "bb0fe54e-a34a-4abb-990d-9f2fb1fb0e76",
+      "name": "HR_Agent Create a card1",
+      "alwaysOutputData": false,
+      "credentials": {
+        "trelloApi": {
+          "id": "elEAXSjpZdBOvpvS",
+          "name": "Trello account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "={{ $json.output }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        176,
+        1760
+      ],
+      "id": "3e98c02f-c900-4cb3-b929-e80c1f825a87",
+      "name": "HR_Agent Respond to Webhook1"
+    },
+    {
+      "parameters": {
+        "model": "o3-mini",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatAzureOpenAi",
+      "typeVersion": 1,
+      "position": [
+        -960,
+        0
+      ],
+      "id": "240ddc4f-6b45-4aea-89ef-261220bbf9d3",
+      "name": "Team_Agent Azure OpenAI Chat Model5",
+      "credentials": {
+        "azureOpenAiApi": {
+          "id": "QJtzDmAhZM2EfVd9",
+          "name": "Azure Open AI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsHuggingFaceInference",
+      "typeVersion": 1,
+      "position": [
+        -608,
+        208
+      ],
+      "id": "54cc5390-255d-4e84-b027-a916a75f4e07",
+      "name": "Team_Agent  Embeddings HuggingFace Inference",
+      "credentials": {
+        "huggingFaceApi": {
+          "id": "aJacnlSPs96ylGAl",
+          "name": "HuggingFaceApi account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsHuggingFaceInference",
+      "typeVersion": 1,
+      "position": [
+        -304,
+        736
+      ],
+      "id": "e832ac0e-e14a-41c8-9f58-8831812a6104",
+      "name": "Embeddings HuggingFace Inference2",
+      "credentials": {
+        "huggingFaceApi": {
+          "id": "aJacnlSPs96ylGAl",
+          "name": "HuggingFaceApi account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "o3-mini",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatAzureOpenAi",
+      "typeVersion": 1,
+      "position": [
+        -400,
+        608
+      ],
+      "id": "46761e25-1dc8-42f3-8bcd-beabb3a4ed04",
+      "name": "Azure OpenAI Chat Model2",
+      "credentials": {
+        "azureOpenAiApi": {
+          "id": "QJtzDmAhZM2EfVd9",
+          "name": "Azure Open AI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"title\": \"the title of the issue\",\n  \"description\": \"the description of the issue\",\n  \"discordMessage\": true,\n  \"trello\": true\n}",
+        "autoFix": true
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        -192,
+        1360
+      ],
+      "id": "fd311c06-5b98-4f7d-9ac8-4cd14d0cb8c7",
+      "name": "Structured Output Parser4"
+    },
+    {
+      "parameters": {
+        "model": "o3-mini",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatAzureOpenAi",
+      "typeVersion": 1,
+      "position": [
+        -464,
+        1488
+      ],
+      "id": "3d6ae86f-bf3f-43df-87dd-30a96edb0f6c",
+      "name": "Azure OpenAI Chat Model5",
+      "credentials": {
+        "azureOpenAiApi": {
+          "id": "QJtzDmAhZM2EfVd9",
+          "name": "Azure Open AI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "o3-mini",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatAzureOpenAi",
+      "typeVersion": 1,
+      "position": [
+        -192,
+        1488
+      ],
+      "id": "8c22bf34-680c-438a-a6df-caa1d67059cc",
+      "name": "Azure OpenAI Chat Model6",
+      "credentials": {
+        "azureOpenAiApi": {
+          "id": "QJtzDmAhZM2EfVd9",
+          "name": "Azure Open AI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('Router agent').item.json.output.conversation_summary }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "You are an personal enrolling specialist creating Trello tickets to address hardware problem or procurement or replace the equipment and sending Discord alerts.\nEach of ticket should have a corresponding Discord alert.\n\nANALYZE: Conversation summary for an employee situation and urgency level.\n\nTRELLO TICKET:\nTitle: \"[ROLE][CATEGORY] Brief issue - [URGENCY]\" (under 60 chars)\nExamples: \"[Developer][New Hire Enrollment] Hardware Procurement - [ITEM] [URGENCY] \"\n\nDescription: Include customer issue, hardware item to be serviced or replaced or procured, emotional state, business\nimpact, technical details.\n\nDISCORD ALERTS (discordMessage: true) for:\n- new hardware procurement;\n- hardware problem;\n- hardware replacement.\n\nTRELLO TICKETS (trello: true) for:\n- all messages\n\n\nURGENCY: CRITICAL (roles: management), HIGH (delayed procurement, business impact, frustrated employee),\nMEDIUM (non-urgent, hardware procurement for new employee).\n\nin given Simple Vector Storage find relevant information and use it for detailed issue.\n\nJSON FORMAT:\n{\n\"title\": \"Short title with role, category and urgency\",\n\"description\": \"Detailed issue, list of accesses, impact, approach\",\n\"discordMessage\": true,\n\"trello\": true\n}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        -368,
+        992
+      ],
+      "id": "2be8f791-a8ec-4e8e-bcde-e45361a257ec",
+      "name": "Technical_MGMT_Agent",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"title\": \"the title of the issue\",\n  \"description\": \"the description of the issue\",\n  \"discordMessage\": true,\n  \"trello\": true\n}",
+        "autoFix": true
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        -80,
+        688
+      ],
+      "id": "065dc9c4-ad3f-4846-b4ee-e2185974d5ed",
+      "name": "Structured Output Parser5"
+    },
+    {
+      "parameters": {
+        "model": "o3-mini",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatAzureOpenAi",
+      "typeVersion": 1,
+      "position": [
+        -80,
+        832
+      ],
+      "id": "8432515e-6e03-4bcf-ad87-2ce7128a12d5",
+      "name": "Azure OpenAI Chat Model",
+      "credentials": {
+        "azureOpenAiApi": {
+          "id": "QJtzDmAhZM2EfVd9",
+          "name": "Azure Open AI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsHuggingFaceInference",
+      "typeVersion": 1,
+      "position": [
+        -336,
+        1488
+      ],
+      "id": "0223aca8-0417-4017-93de-d6fc3393766a",
+      "name": "Embeddings HuggingFace Inference",
+      "credentials": {
+        "huggingFaceApi": {
+          "id": "aJacnlSPs96ylGAl",
+          "name": "HuggingFaceApi account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "webhook",
+        "content": "={{ $json.output.title }}\n{{ $json.output.description }}\n{{ $json.output.discordMessage }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.discord",
+      "typeVersion": 2,
+      "position": [
+        256,
+        560
+      ],
+      "id": "03810234-4448-4dad-a33c-f4d509defc22",
+      "name": "Discord IT channel: Access Request",
+      "webhookId": "fbcdc0a9-f1d5-4bfc-864c-21f959c3c728",
+      "credentials": {
+        "discordWebhookApi": {
+          "id": "GZBD01Xedg5UEABJ",
+          "name": "Discord Webhook account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "webhook",
+        "content": "={{ $json.output.title }}\n{{ $json.output.description }}\n{{ $json.output.discordMessage }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.discord",
+      "typeVersion": 2,
+      "position": [
+        160,
+        1312
+      ],
+      "id": "ad559033-9b2f-4d1b-b83d-c70467c039f2",
+      "name": "Discord IT channel: Hardware Request",
+      "webhookId": "fbcdc0a9-f1d5-4bfc-864c-21f959c3c728",
+      "credentials": {
+        "discordWebhookApi": {
+          "id": "GZBD01Xedg5UEABJ",
+          "name": "Discord Webhook account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "listId": "68caa4d9c875f4dd83cacbf7",
+        "name": "={{ $('Technical_MGMT_Agent').item.json.output.title}}",
+        "description": "={{ $('Technical_MGMT_Agent').item.json.output.description}}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.trello",
+      "typeVersion": 1,
+      "position": [
+        160,
+        1152
+      ],
+      "id": "b4ca957d-8b2d-49c3-9865-2e04703c66a8",
+      "name": "Create a Hardware ticket",
+      "credentials": {
+        "trelloApi": {
+          "id": "elEAXSjpZdBOvpvS",
+          "name": "Trello account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "listId": "68caa4d9c875f4dd83cacbf7",
+        "name": "={{ $('UserMGMT_Agent').item.json.output.title}}",
+        "description": "={{ $('UserMGMT_Agent').item.json.output.description}}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.trello",
+      "typeVersion": 1,
+      "position": [
+        256,
+        400
+      ],
+      "id": "52fcf934-15f7-49ac-ab02-36055a127b95",
+      "name": "Create an Access ticket",
+      "credentials": {
+        "trelloApi": {
+          "id": "elEAXSjpZdBOvpvS",
+          "name": "Trello account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "b40554e2-3918-4aee-bb31-ea0b1a1a427b",
+                    "leftValue": "={{ $json.output.conversation_summary.includes('Gitlab') || $json.output.conversation_summary.includes('accesses') || $json.output.conversation_summary.includes('enrolling') || $json.output.conversation_summary.includes('telephony') || $json.output.conversation_summary.includes('bugtracking') }}",
+                    "rightValue": true,
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Access"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.output.conversation_summary.includes('laptop') || $json.output.conversation_summary.includes('mouse') || $json.output.conversation_summary.includes('keyboard') || $json.output.conversation_summary.includes('headset') || $json.output.conversation_summary.includes('equipment') || $json.output.conversation_summary.includes('hardware') }}",
+                    "rightValue": true,
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    },
+                    "id": "e1bb61a6-a34c-4492-a2b1-79e2d06bd5ca"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Hardware"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        -656,
+        864
+      ],
+      "id": "66c82fe6-5824-42aa-8cfc-61f83d963d0b",
+      "name": "Hardware or Accesses support?",
+      "alwaysOutputData": true,
+      "executeOnce": false,
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolDescription": "For new employees, the following accesses are needed:\n\n[Developer]\n - Gitlab access to new project;\n - Access to project Wiki/Confluence;\n - Changes to mailing lists;\n - Enrolling onto team chats\n\n[QA Engineer]\n - Access to project Wiki/Confluence;\n - Changes to mailing lists;\n - Enrolling onto team chats\n\n[Sales] \n - Access to project Wiki/Confluence;\n - Changes to mailing lists;\n - Enrolling onto team chats\n - Access to Billing/Invoicing Systems\n\n[Support]\n - Access to knowledge bases;\n - Changes to mailing lists;\n - Enrolling onto team chats\n - Access to telephony and bugtracking systems",
+        "memoryKey": {
+          "__rl": true,
+          "mode": "list",
+          "value": "vector_store_key"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreInMemory",
+      "typeVersion": 1.3,
+      "position": [
+        -304,
+        608
+      ],
+      "id": "9437ac1f-73e3-47b5-a616-ccdc8ebf4918",
+      "name": "Accesses Info Storage"
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolDescription": "For employees, the following hardware is needed:\n\n[Developer]\n[Laptop] Lenovo P16 Laptop\n[Headset] Jabra Headset\n[Mouse] Logitech trackball\n[Keyboard] Logitech Keyboard  \n\n[QA Engineer]\n[Laptop] Lenovo T14 Laptop\n[Headset] Jabra Headset\n[Mouse] Logitech wireless mouse\n[Keyboard] Logitech Keyboard  \n\n[Sales] \n[Laptop] Compact desktop workstation\n[Headset] Jabra Headset\n[Mouse] Logitech wireless mouse\n[Keyboard] HP Keyboard  \n\n[Support]\n[Laptop] Compact desktop workstation\n[Headset] Jabra Headset\n[Mouse]  Logitech wireless mouse\n  \n[Management]\n[Laptop] MacBook Air\n[Headset] Jabra Headset\n[Mouse] Magic Mouse\n[Keyboard] Magic Keyboard",
+        "memoryKey": {
+          "__rl": true,
+          "mode": "list",
+          "value": "vector_store_key"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreInMemory",
+      "typeVersion": 1.3,
+      "position": [
+        -336,
+        1248
+      ],
+      "id": "63123a54-0808-4e6f-a564-c641138baf67",
+      "name": "Hardware Info Storage"
+    },
+    {
+      "parameters": {
+        "message": "=The ticket for hardware was successfully submitted",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chat",
+      "typeVersion": 1,
+      "position": [
+        160,
+        784
+      ],
+      "id": "46ea6cbd-96ca-4246-97ea-b83507a32b79",
+      "name": "Hardware: Respond to Chat"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('Router agent').item.json.output.conversation_summary }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "You are an personal enrolling specialist creating Trello tickets to procure accesses and sending Discord alerts.\nEach of ticket should have a corresponding Discord alert.\n\nANALYZE: Conversation summary for an employee situation and urgency level.\n\nTRELLO TICKET:\nTitle: \"[ROLE][CATEGORY] Brief issue - [URGENCY]\" (under 60 chars)\nExamples: \"[Developer][New Hire Enrollment] Accesses Procurement - [URGENCY] \"\n\nDescription: Include customer issue, list of accesses to be procured, emotional state, business\nimpact, technical details.\n\nURGENCY: CRITICAL (roles: management, severe delay in procurement), HIGH (delayed procurement, business impact, frustrated employee),\nMEDIUM (non-urgent).\n\nDISCORD ALERTS (discordMessage: true) for:\n- new hired employees;\n- existing employees\n\nTRELLO TICKETS (trello: true) for:\n- all messages\n\n\nJSON FORMAT:\n{\n\"title\": \"Short title with role, category and urgency\",\n\"description\": \"Detailed issue, list of accesses, impact, approach\",\n\"discordMessage\": true,\n\"trello\": true\n}\n\nin given Simple Vector Storage find relevant information and use it as detailed issue."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        -368,
+        368
+      ],
+      "id": "ee3d3295-9de4-478e-b1e3-3099a114da09",
+      "name": "UserMGMT_Agent"
+    },
+    {
+      "parameters": {
+        "message": "=The Jira task is already created and assigned!",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chat",
+      "typeVersion": 1,
+      "position": [
+        256,
+        96
+      ],
+      "id": "dd345330-2726-4c04-a649-aa88833b2e8d",
+      "name": "Accesses: Respond to Chat"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Team agent",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Hardware or Accesses support?",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "hr_agent",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "abbreviation_agent",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory2": {
+      "ai_memory": [
+        [
+          {
+            "node": "Router agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser1": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Router agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Router agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model3": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Structured Output Parser1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "hr_agent": {
+      "main": [
+        [
+          {
+            "node": "HR_Agent Create a card1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HR_Agent Respond to Webhook1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "onboarding_checklist": {
+      "ai_tool": [
+        [
+          {
+            "node": "Team agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "team_members": {
+      "ai_tool": [
+        [
+          {
+            "node": "Team agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call 'tool_github_request'": {
+      "ai_tool": [
+        [
+          {
+            "node": "Team agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Router agent": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Team agent": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "abbreviation_agent": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Respond to Chat": {
+      "main": [
+        []
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Router agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Abbreviation Simple Vector Store": {
+      "ai_tool": [
+        [
+          {
+            "node": "abbreviation_agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Abbreviation Azure OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "abbreviation_agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Abbreviation Embeddings HuggingFace Inference": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Abbreviation Simple Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HR_Agent Azure OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "hr_agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HR_Agent Simple Vector Store": {
+      "ai_tool": [
+        [
+          {
+            "node": "hr_agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HR_Agent Embeddings HuggingFace Inference": {
+      "ai_embedding": [
+        [
+          {
+            "node": "HR_Agent Simple Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HR_Agent Create a card1": {
+      "main": [
+        []
+      ]
+    },
+    "Team_Agent Azure OpenAI Chat Model5": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Team agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Team_Agent  Embeddings HuggingFace Inference": {
+      "ai_embedding": [
+        [
+          {
+            "node": "onboarding_checklist",
+            "type": "ai_embedding",
+            "index": 0
+          },
+          {
+            "node": "team_members",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings HuggingFace Inference2": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Accesses Info Storage",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Azure OpenAI Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "UserMGMT_Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser4": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Technical_MGMT_Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Azure OpenAI Chat Model5": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Technical_MGMT_Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Azure OpenAI Chat Model6": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Structured Output Parser4",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Technical_MGMT_Agent": {
+      "main": [
+        [
+          {
+            "node": "Discord IT channel: Hardware Request",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Create a Hardware ticket",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Respond to Webhook6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser5": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "UserMGMT_Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Azure OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Structured Output Parser5",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings HuggingFace Inference": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Hardware Info Storage",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Hardware or Accesses support?": {
+      "main": [
+        [
+          {
+            "node": "UserMGMT_Agent",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Technical_MGMT_Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Accesses Info Storage": {
+      "ai_tool": [
+        [
+          {
+            "node": "UserMGMT_Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Hardware Info Storage": {
+      "ai_tool": [
+        [
+          {
+            "node": "Technical_MGMT_Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "UserMGMT_Agent": {
+      "main": [
+        [
+          {
+            "node": "Discord IT channel: Access Request",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Create an Access ticket",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Respond to Webhook5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "a1869705-6116-43d7-91bb-e0f46140a6a6",
+  "meta": {
+    "instanceId": "faa1f7da9db6e693c7f4a0102aa316ba68fbe94cd64d161140e66704fd687256"
+  },
+  "id": "Df0fFgCYJtE739hM",
+  "tags": []
+}

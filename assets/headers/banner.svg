@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1920" height="1080" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Onboarding Assistant Bot Banner">
+  <defs>
+    <linearGradient id="gradBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#F1DBFF"/>
+      <stop offset="30%" stop-color="#E2CBF7"/>
+      <stop offset="70%" stop-color="#D6F6FF"/>
+      <stop offset="100%" stop-color="#B8E6FF"/>
+    </linearGradient>
+    <linearGradient id="textGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="50%" stop-color="#f8f9ff"/>
+      <stop offset="100%" stop-color="#e8f4ff"/>
+    </linearGradient>
+    <filter id="drop" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="6" stdDeviation="12" flood-opacity="0.3"/>
+    </filter>
+    <filter id="textShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1920" height="1080" fill="url(#gradBg)"/>
+
+  <!-- Decorative elements -->
+  <circle cx="200" cy="200" r="80" fill="#ffffff" opacity="0.1"/>
+  <circle cx="1720" cy="880" r="120" fill="#ffffff" opacity="0.08"/>
+  <circle cx="1600" cy="200" r="60" fill="#ffffff" opacity="0.12"/>
+  <circle cx="320" cy="880" r="100" fill="#ffffff" opacity="0.06"/>
+
+  <!-- Main content container -->
+  <rect x="160" y="240" width="1600" height="600" rx="80" fill="rgba(255,255,255,0.15)" filter="url(#drop)" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>
+
+  <!-- Main title -->
+  <g font-family="Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto" text-anchor="middle">
+    <!-- Shadow text -->
+    <text x="960" y="520" font-size="120" font-weight="900" fill="#111111" opacity="0.15">Onboarding Assistant Bot</text>
+    <!-- Main text -->
+    <text x="960" y="515" font-size="120" font-weight="900" fill="url(#textGrad)" filter="url(#textShadow)">Onboarding Assistant Bot</text>
+
+    <!-- Subtitle -->
+    <text x="960" y="620" font-size="48" font-weight="600" fill="#494d4e">Intelligent User Guidance &amp; Support</text>
+
+    <!-- Tagline -->
+    <text x="960" y="720" font-size="32" font-weight="400" fill="#494d4e">Streamlining onboarding experiences with AI-powered assistance</text>
+  </g>
+
+  <!-- Bottom accent line -->
+  <rect x="360" y="780" width="1200" height="4" rx="2" fill="rgba(255,255,255,0.4)"/>
+</svg>
